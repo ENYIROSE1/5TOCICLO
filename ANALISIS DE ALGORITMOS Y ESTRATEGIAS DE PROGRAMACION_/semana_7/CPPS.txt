@@ -1,0 +1,217 @@
+__________________________________________________________________________________________________________
+mult ent largo 1.cpp
+__________________________________________________________________________________________________________
+#include <iostream>
+#include <cmath>
+using namespace std;
+// u = 12345 ,  v = 567     5
+int maxTam(long long u, long long v){
+	int c1=0;
+	while(u>=1){
+		u=u/10;
+		c1++;
+	}
+	int c2=0;
+	while(v>=1){
+		v=v/10;
+		c2++;
+	}
+	//c1 = 4 , c2 =4 
+	return fmax(c1,c2);
+}
+
+long long multip(long long u, long long v){
+	//divide
+	int n = maxTam(u,v);
+	
+	if (n == 1){
+		return u*v;
+	}else{
+		long long w = u / pow(10,n/2);
+		long long x = u - w*pow(10,n/2);
+		
+		long long y = v / pow(10,n/2);
+		long long z = v - y*pow(10,n/2);
+		
+		long long wy = multip(w, y);
+		long long wzxy = multip(w, z) + multip(x, y);
+		long long xz = multip(x, z);
+	
+		//resuelve	//junta  
+		int s = n/2;
+		return pow(10, 2*s)*wy + pow(10, s)*wzxy + xz;
+	}
+}
+
+
+int main(int argc, char *argv[]) {
+	long long n1,n2,n3;
+	cout << "Ingrese n1:";
+	cin>>n1;
+	cout << "Ingrese n2:";
+	cin>>n2;
+	n3 = multip(n1, n2);
+	cout << n1 << " * " << n2 << " = "<< n3;
+	return 0;
+}
+_________________________________________________________________________________________________________
+mult ent largo 2.cpp
+_________________________________________________________________________________________________________
+#include <iostream>
+using namespace std;
+
+
+int Power(int x, int y) {
+	if (y == 0)
+		return 1;
+	else if (y == 1)
+		return(x);
+	else
+		return(x * Power(x, y-1));
+}
+
+
+
+int Digitos (int n, int &dig) {
+	if (n < 10){
+		return (dig+1);
+	}else{
+		dig++;
+		return(Digitos(n/10, dig));
+	}
+	
+}
+
+
+int primeros(int digitos, int &numero) {
+	return numero/Power(10, digitos);
+}
+
+
+
+int ultimos(int digitos, int &numero) {
+	return numero % Power(10, digitos);
+}
+
+
+
+int multiplica (int &u, int &v) {
+	int dig1=0, dig2=0;
+	int numDigitos = max(Digitos(u, dig1), Digitos(v, dig2));
+	
+	if (numDigitos <= 1){
+		return u*v;
+	}
+	
+	numDigitos = (numDigitos / 2) + (numDigitos % 2);
+	
+	int w = primeros(numDigitos, u);
+	int x = ultimos(numDigitos, u);
+	
+	int y = primeros(numDigitos, v);
+	int z = ultimos(numDigitos, v);
+	
+	int p=multiplica(w, y);
+	int q=multiplica(x, z);
+	
+	int wMasx = w + x;
+	int zMasy = z + y;
+	
+	int r=multiplica(wMasx, zMasy);
+	
+	return Power(10, 2*numDigitos)*p+Power(10, numDigitos)*(r-p-q)+q;
+	
+}
+
+int main () {
+	
+	int numero=0,numero2=0;
+	cout << "Ingrese los numeros a multiplicar:";
+	cout << "\nNúmero 1: ";
+	cin >> numero;
+	
+	cout << "\nNúmero 2 :";
+	cin >> numero2;
+	
+	cout << "\nNúmero ingresados:";
+	
+	cout << "\nNumero 1 : " << numero;
+	
+	cout << "\nNumero 2 : " << numero2;
+	
+	//Les multiplicamos!
+	
+	cout << "\nEl resultado del producto es : "<< numero << "*"<< numero2 << "=" << multiplica(numero, numero2);
+	
+	return 0;
+	
+}
+__________________________________________________________________________________________________________
+mult ent largo 3.cpp
+__________________________________________________________________________________________________________
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+
+int tamano(long long n) {
+	int contador = 0;
+	do {
+		n = n/10;
+		++contador;
+	}while(n >= 10);
+	
+	return contador + 1;
+}
+
+
+
+long long multiplicacion(long long numero1, long long numero2) {
+	
+	int n , s, naux, naux2;
+	long long w,x,y,z;
+	
+	naux = tamano(numero1);
+	naux2 = tamano(numero2);
+	
+	if(naux >= naux2) {
+		n = naux;
+	} else {
+		n = naux2;
+	}
+	
+	if(n == 2) {
+		return numero1*numero2;
+	} else {
+		s = n/2;
+		w = numero1/pow(10,s);
+		x = numero1 - pow(10,s)*w;
+		y = numero2/pow(10,s);
+		z = numero2 - pow(10,s)*y;
+		
+		return multiplicacion(w,y)*pow(10,2*s) + (multiplicacion(w,z) + multiplicacion(x,y))*pow(10,s) + multiplicacion(x,z);
+		
+	}
+	
+	return 0;
+}
+
+
+int main(int argc, char *argv[]) {
+	
+	long long numero1, numero2, Multi;
+	
+	cout << "Ingrese un numero :";
+	cin>> numero1;
+	
+	cout << "Ingrese un segundo numero: ";
+	cin >> numero2;
+	
+	Multi= multiplicacion(numero1,numero2);
+	
+	cout << "La multiplicacion es : " << Multi;
+	
+	return 0;
+	
+}
