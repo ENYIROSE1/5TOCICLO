@@ -1,0 +1,36 @@
+
+/*
+	Tema: Suma de subconjuntos
+	Descripcion: el problema de la suma de subconjuntos es ENCONTRAR un subconjunto de
+			     elementos que son seleccionados de un conjunto principal cuya suma de ellos nos dea
+			     un numero K, los subconjuntos tienen valores positivos, el conjunto de entrada debeb ser
+			     único
+
+*/
+
+/*
+Es una tecnica algoritmica para resolver problemas de forma recursiva al tratar de construir una 
+solucion de forma incremental
+*/
+
+Dado un conjunto de elementos enteros positivos (array), determine el numero de subconjuntos sumen "n"
+ejemplo:
+int miarray[]={1  , 6 , 4}
+n=7
+
+resultado/output: solo se obtuvo un subconjunto que sume 7, el cual fue {6 , 1}, nodos realizados internamente: 1
+
+/*Basicamente los nodos son presentados como subconjuntos, el codigo lo hace ver como la cantidad de veces
+que tuvo que pensar el programa
+
+La cantidad de nodos se dan por la cantidad de todas las busquedas posibles que
+ realiza el algoritmo de izquierda a derecha dentro del array
+*/
+
+/*
+el conjunto padre es {1 , 6 y 4}
+entonces el conjunto hijo para sumar 7 seria { 6 y 1} porque 6 mas 1 es igual a 7
+*/
+
+
+
